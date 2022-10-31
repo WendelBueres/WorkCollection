@@ -2,12 +2,12 @@ import { NextFunction, Request, Response } from "express";
 import { AppError } from "../errors";
 import jwt from "jsonwebtoken";
 
-async function isAdminMiddleware(
+async function hasAuthMiddleware(
   req: Request,
   res: Response,
   next: NextFunction
 ) {
-  let token = req.params.authorization;
+  let token = req.headers.authorization;
 
   if (!token) {
     throw new AppError("Missing authorization headers");
@@ -29,4 +29,4 @@ async function isAdminMiddleware(
   });
 }
 
-export default isAdminMiddleware;
+export default hasAuthMiddleware;
