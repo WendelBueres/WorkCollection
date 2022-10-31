@@ -2,12 +2,13 @@ import { NextFunction, Request, Response } from "express";
 import { AppError } from "../errors";
 import jwt from "jsonwebtoken";
 
-async function isAdminMiddleware(
+async function isAdmMiddleware(
   req: Request,
   res: Response,
   next: NextFunction
 ) {
-  let token = req.params.authorization;
+  let token = req.headers.authorization;
+  const { id } = req.params;
 
   if (!token) {
     throw new AppError("Missing authorization headers");
@@ -26,11 +27,13 @@ async function isAdminMiddleware(
     };
 
     if (req.user.isAdm === false) {
-      throw new AppError("Unauthorized, you must have admin privileges", 403);
+      if (id !== req.user.id) {
+        throw new AppError("Unauthorized, you must have admin privileges", 403);
+      }
     }
 
     next();
   });
 }
 
-export default isAdminMiddleware;
+export default isAdmMiddleware;
