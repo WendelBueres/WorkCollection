@@ -97,7 +97,7 @@ describe("/users", () => {
   });
 
   test("PATCH/users - should be able to change email", async () => {
-    const res = await request(app).post("/users").send(mockedUserPatch);
+    const res = await request(app).patch("/users").send(mockedUserPatch);
 
     expect(res.body).toHaveProperty("email");
     expect(res.body.email).toEqual("james@mail.com");
@@ -105,7 +105,7 @@ describe("/users", () => {
   });
 
   test("PATCH/users - must not be able to alter userId", async () => {
-    const res = await request(app).post("/users").send(mockedUserPatchId);
+    const res = await request(app).patch("/users").send(mockedUserPatchId);
 
     expect(res.body).toHaveProperty("message");
     expect(res.body.message).toEqual("userId is read only");
