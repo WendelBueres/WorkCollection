@@ -1,10 +1,16 @@
-import { Entity, Column, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  JoinColumn,
+} from "typeorm";
 import { User } from "./user.entity";
 
 @Entity("projects")
 class Project {
   @PrimaryGeneratedColumn("uuid")
-  id?: string;
+  readonly id: string;
 
   @Column()
   name: string;
@@ -19,11 +25,11 @@ class Project {
   link: string;
 
   @Column()
-  technology: string;
+  technology: [string];
 
   @ManyToOne((type) => User, (users) => users.project)
   @JoinColumn()
-  user: User
+  user: User;
 }
 
 export { Project };

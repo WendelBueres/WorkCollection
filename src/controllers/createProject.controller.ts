@@ -1,14 +1,15 @@
 import { Request, Response } from "express";
-import createProjectService from "../services/createdProject.service";
+import { IProject } from "../interfaces/projects";
+import createProjectService from "../service/createProject.service";
 
 
-const createProjectController = (req: Request, res: Response) => {
-    const data = req.body;
-    const userId = req.user.id;
+const createProjectController = async(req: Request, res: Response) => {
+    const data = req.body
+    const userId = req.user.id
 
-    const createdProject = createProjectService(data, userId);
+    const createdProject = await createProjectService(data, userId)
 
-    return res.status(201).json(createdProject);
+    return res.status(201).json(createdProject)
 }
 
 export default createProjectController;
