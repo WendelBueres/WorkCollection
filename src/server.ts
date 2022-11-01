@@ -2,7 +2,7 @@ import app from "./app";
 import AppDataSource from "./data-source";
 
 (async () => {
-  const port = process.env.PORT;
+  const port = 3000;
 
   await AppDataSource.initialize().catch((err) => {
     console.error("Error during Data Source initialization", err);
