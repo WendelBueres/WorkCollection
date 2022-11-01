@@ -3,7 +3,7 @@ import { Entity, Column, PrimaryGeneratedColumn } from "typeorm";
 @Entity("contacts")
 class Contact {
   @PrimaryGeneratedColumn("uuid")
-  id?: string;
+  readonly id: string;
 
   @Column()
   linkedin: string;
