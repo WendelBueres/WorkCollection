@@ -5,13 +5,13 @@ class Contact {
   @PrimaryGeneratedColumn("uuid")
   readonly id: string;
 
-  @Column()
+  @Column({ nullable: true })
   linkedin: string;
 
-  @Column()
+  @Column({ nullable: true })
   github: string;
 
-  @Column()
+  @Column({ nullable: true })
   phone: number;
 }
 
