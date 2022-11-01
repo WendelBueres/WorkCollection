@@ -25,7 +25,7 @@ class Project {
   link: string;
 
   @Column()
-  technology: [string];
+  technology: string;
 
   @ManyToOne((type) => User, (users) => users.project)
   @JoinColumn()
