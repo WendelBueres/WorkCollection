@@ -1,7 +1,7 @@
 export interface IContactRequest {
-  linkedin: string;
-  github: string;
-  phone: string;
+  linkedin?: string;
+  github?: string;
+  phone?: string;
   userId: string;
 }
 
