@@ -4,7 +4,7 @@ import createProjectService from "../service/createProject.service";
 
 
 const createProjectController = async(req: Request, res: Response) => {
-    const data = await req.body
+    const data = req.body
     const userId = req.user.id
 
     const createdProject = await createProjectService(data, userId)
