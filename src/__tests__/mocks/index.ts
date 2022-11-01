@@ -1,4 +1,5 @@
 import { IContactRequest } from "../../interfaces/contact";
+import { IProjectRequest } from "../../interfaces/projects";
 import { IUserLogin, IUserRequest } from "../../interfaces/user";
 import { createdUserIdTest } from "../integration/users";
 
@@ -78,4 +79,25 @@ export const mockedContactLinkedin: any = {
 
 export const mockedContactPhone: any = {
   phone: "+55 96 98200-0000",
+};
+
+export const mockedProject: IProjectRequest = {
+  name: "Floricultura Online",
+  category: "Front-End",
+  image: "imageproject.com/img.jpeg",
+  link: "floresonline.com",
+  technology: "React, TypeScript",
+  userId: createdUserIdTest,
+};
+
+export const mockedProjectPatchName: any = {
+  name: "Flores Online",
+};
+
+export const mockedProjectPatchId: any = {
+  id: "48d4dd5d5e6f",
+};
+
+export const mockedContactPatchId: any = {
+  id: "48d4dd5d5e6f",
 };
