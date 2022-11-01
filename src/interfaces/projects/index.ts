@@ -3,7 +3,7 @@ export interface IProjectRequest {
   category: string;
   image: string;
   link: string;
-  technology: [string];
+  technology: string;
   userId: string;
 }
 
