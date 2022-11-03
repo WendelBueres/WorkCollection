@@ -6,7 +6,7 @@ const deleteContactController = async (req: Request, res: Response) => {
 
   await deleteContactService(id, contact);
 
-  return res.status(204).json(deleteContact);
+  return res.status(204);
 };
 
 export default deleteContactController;
