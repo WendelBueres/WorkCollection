@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import createProjectService from "../../services/contacts/createProject.services";
+import createProjectService from "../../services/projects/createProject.services";
 
 const createProjectController = async (req: Request, res: Response) => {
   const data = req.body;
