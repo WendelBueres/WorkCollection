@@ -3,16 +3,15 @@ import AppDataSource from "../../../data-source";
 import request from "supertest";
 import app from "../../../app";
 import {
-  mockedContact,
   mockedContactGithub,
   mockedContactLinkedin,
   mockedContactPatchId,
   mockedContactPhone,
+  mockedUser,
 } from "../../mocks";
 
-let projectIdTest: string;
-
 describe("/contacts", () => {
+  let userId: string;
   let connection: DataSource;
 
   beforeAll(async () => {
@@ -29,28 +28,14 @@ describe("/contacts", () => {
     await connection.destroy();
   });
 
-  test("POST/contacts - must be able to create the contacts", async () => {
-    const res = await request(app).post("/contacts").send(mockedContact);
-
-    expect(res.body).toHaveProperty("id");
-    projectIdTest = res.body.id;
-    expect(res.body).toHaveProperty("userId");
-    expect(res.body).toHaveProperty("github");
-    expect(res.body).toHaveProperty("linkedin");
-    expect(res.body).toHaveProperty("phone");
-    expect(res.body.github).toBe("github.com/linkuser");
-    expect(res.body.linkedin).toBe("linkedin.com/linkuser");
-    expect(res.body.phone).toBe("+55 96 99999-9999");
-    expect(res.status).toBe(201);
-  });
-
   test("PATCH/contacts - must be able to patch the contacts", async () => {
+    const user = await request(app).post("/users").send(mockedUser);
+    userId = await user.body.id;
     const res = await request(app)
-      .patch(`/contacts/${projectIdTest}`)
+      .patch(`/contacts/${userId}`)
       .send(mockedContactGithub);
 
     expect(res.body).toHaveProperty("id");
-    expect(res.body).toHaveProperty("userId");
     expect(res.body).toHaveProperty("github");
     expect(res.body).toHaveProperty("linkedin");
     expect(res.body).toHaveProperty("phone");
@@ -60,11 +45,10 @@ describe("/contacts", () => {
 
   test("PATCH/contacts - must be able to patch the contacts", async () => {
     const res = await request(app)
-      .patch(`/contacts/${projectIdTest}`)
+      .patch(`/contacts/${userId}`)
       .send(mockedContactLinkedin);
 
     expect(res.body).toHaveProperty("id");
-    expect(res.body).toHaveProperty("userId");
     expect(res.body).toHaveProperty("github");
     expect(res.body).toHaveProperty("linkedin");
     expect(res.body).toHaveProperty("phone");
@@ -74,11 +58,10 @@ describe("/contacts", () => {
 
   test("PATCH/contacts - must be able to patch the contacts", async () => {
     const res = await request(app)
-      .patch(`/contacts/${projectIdTest}`)
+      .patch(`/contacts/${userId}`)
       .send(mockedContactPhone);
 
     expect(res.body).toHaveProperty("id");
-    expect(res.body).toHaveProperty("userId");
     expect(res.body).toHaveProperty("github");
     expect(res.body).toHaveProperty("linkedin");
     expect(res.body).toHaveProperty("phone");
@@ -88,7 +71,7 @@ describe("/contacts", () => {
 
   test("PATCH/contacts - must not be able to alter user id", async () => {
     const res = await request(app)
-      .patch("/contacts")
+      .patch(`/contacts/${userId}`)
       .send(mockedContactPatchId);
 
     expect(res.body).toHaveProperty("message");
