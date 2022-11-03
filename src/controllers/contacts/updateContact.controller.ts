@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import deleteContactService from "../../services/contacts/deleteContact.services";
 import updateContactService from "../../services/contacts/updateContact.services";
 
 const updateContactController = async (req: Request, res: Response) => {
