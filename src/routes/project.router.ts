@@ -3,10 +3,11 @@ import deleteContactController from "../controllers/contacts/deleteContact.contr
 import createProjectController from "../controllers/project/createProject.controller";
 import listProjectsController from "../controllers/project/listProjects.controller";
 import updateProjectController from "../controllers/project/updateProject.controller";
+import hasAuthMiddleware from "../middlewares/hasAuth.middleware";
 
 const projectRoutes = Router();
 
-projectRoutes.post("", createProjectController);
+projectRoutes.post("", hasAuthMiddleware, createProjectController);
 projectRoutes.get("", listProjectsController);
 projectRoutes.patch("/:id", updateProjectController);
 projectRoutes.delete("/:id", deleteContactController);
