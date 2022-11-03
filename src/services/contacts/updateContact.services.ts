@@ -1,20 +1,28 @@
 import AppDataSource from "../../data-source";
 import { Contact } from "../../entities/contact.entity";
-import { User } from "../../entities/user.entity";
 import { AppError } from "../../errors";
+import { IContactRequest } from "../../interfaces/contact";
 
-const updateContactService = async (data: any, id: string) => {
+const updateContactService = async (
+  { linkedin, github, phone, userId }: IContactRequest,
+  id: string
+): Promise<Contact> => {
   const contactRepository = AppDataSource.getRepository(Contact);
-  const contactExists = await contactRepository.findOneBy({ id: id });
+  const findContact = await contactRepository.findOneBy({ id: userId });
 
-  if (!contactExists) {
+  if (!findContact) {
     throw new AppError("contact not found", 404);
   }
 
-  contactRepository.update(id, data);
-  const update = await contactRepository.findOneBy({ id: id });
+  await contactRepository.update(id, {
+    linkedin: linkedin ? linkedin : findContact.linkedin,
+    github: github ? github : findContact.github,
+    phone: phone ? phone : findContact.phone,
+  });
 
-  return update;
+  const contact = await contactRepository.findOneBy({ id: userId });
+
+  return contact!;
 };
 
 export default updateContactService;
