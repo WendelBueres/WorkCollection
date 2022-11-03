@@ -12,7 +12,7 @@ app.use(express.json());
 app.use("/users", userRoutes);
 app.use("/login", loginRoutes);
 app.use("/projects", projectRoutes);
-app.use("/categories", contactRoutes);
+app.use("/contacts", contactRoutes);
 app.use(handleErrorMidleware);
 
 export default app;

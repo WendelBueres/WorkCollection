@@ -11,20 +11,19 @@ const updateProjectService = async (
 
   const searchProject = await projectRepository.findOneBy({ id });
   if (!searchProject) {
-    throw new AppError("Project Not Found", 404);
-  } else {
-    projectRepository.update(id, {
-      name: name ? name : searchProject.name,
-      category: category ? category : searchProject.category,
-      image: image ? image : searchProject.image,
-      link: link ? link : searchProject.link,
-      technology: technology ? technology : searchProject.technology,
-    });
-
-    const projectUpdated = await projectRepository.findOneBy({ id });
-
-    return projectUpdated!;
+    throw new AppError("id is read only", 400);
   }
+  await projectRepository.update(id, {
+    name: name ? name : searchProject.name,
+    category: category ? category : searchProject.category,
+    image: image ? image : searchProject.image,
+    link: link ? link : searchProject.link,
+    technology: technology ? technology : searchProject.technology,
+  });
+
+  const projectUpdated = await projectRepository.findOneBy({ id });
+
+  return projectUpdated!;
 };
 
 export default updateProjectService;

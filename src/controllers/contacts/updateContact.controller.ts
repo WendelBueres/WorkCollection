@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import { IContactRequest } from "../../interfaces/contact";
 import updateContactService from "../../services/contacts/updateContact.services";
 
 const updateContactController = async (req: Request, res: Response) => {
