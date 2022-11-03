@@ -63,7 +63,6 @@ export const mockedLoginErrorFieldEmail: any = {
 };
 
 export const mockedContact: IContactRequest = {
-  userId: createdUserIdTest,
   github: "github.com/linkuser",
   linkedin: "linkedin.com/linkuser",
   phone: "+55 96 99999-9999",
