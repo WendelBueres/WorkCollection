@@ -7,7 +7,7 @@ export interface IUserRequest {
   password: string;
   image?: string;
   bio: string;
-  contact: IContactRequest;
+  contact?: IContactRequest;
 }
 
 export interface IUser extends IUserRequest {
