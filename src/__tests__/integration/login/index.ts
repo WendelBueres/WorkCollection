@@ -5,6 +5,7 @@ import app from "../../../app";
 import {
   mockedLoginErrorFieldEmail,
   mockedLoginErrorFieldPassword,
+  mockedUser,
   mockedUserLogin,
 } from "../../mocks";
 
@@ -23,6 +24,24 @@ describe("/login", () => {
 
   afterAll(async () => {
     await connection.destroy();
+  });
+
+  test("POST/users - Must be able to create user", async () => {
+    const res = await request(app).post("/users").send(mockedUser);
+
+    expect(res.body).toHaveProperty("id");
+    expect(res.body).toHaveProperty("name");
+    expect(res.body).toHaveProperty("email");
+    expect(res.body).toHaveProperty("bio");
+    expect(res.body).toHaveProperty("image");
+    expect(res.body).not.toHaveProperty("password");
+    expect(res.body.name).toEqual("Jonas");
+    expect(res.body.email).toEqual("jonas@email.com");
+    expect(res.body.image).toEqual(
+      "https://media.istockphoto.com/vectors/green-alien-climbs-out-from-the-hole-of-space-with-stars-in-flat-vector-id1173828830?k=20&m=1173828830&s=612x612&w=0&h=bXd7sIQWbx7HJoDbvSb8BELPHZICLzgwioOaVmwIeJE="
+    );
+    expect(res.body.bio).toEqual("Olá, eu sou um dev!");
+    expect(res.status).toBe(201);
   });
 
   test("POST/login - should be able to login and return token", async () => {

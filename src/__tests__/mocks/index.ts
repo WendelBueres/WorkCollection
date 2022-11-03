@@ -18,14 +18,6 @@ export const mockedUserErrorName: any = {
   password: "123456789!",
 };
 
-export const mockedUserPatch: any = {
-  email: "james@mail.com",
-};
-
-export const mockedUserPatchId: any = {
-  id: "48as15das5da12asd",
-};
-
 export const mockedUserErrorPassword: any = {
   name: "Maria",
   email: "marcia@email.com",
@@ -42,6 +34,14 @@ export const mockedUserErrorEmail: any = {
   name: "Maria",
   bio: "Olá, sou uma dev!",
   password: "123456789!",
+};
+
+export const mockedUserPatch: any = {
+  email: "james@mail.com",
+};
+
+export const mockedUserPatchId: any = {
+  id: "48as15das5da12asd",
 };
 
 export const mockedUserLogin: IUserLogin = {
