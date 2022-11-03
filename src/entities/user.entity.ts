@@ -31,9 +31,7 @@ class User {
   @Column()
   bio: string;
 
-  @OneToOne((type) => Contact, {
-    eager: true,
-  })
+  @OneToOne((type) => Contact, (user) => User, { eager: true })
   @JoinColumn()
   contact: Contact;
 

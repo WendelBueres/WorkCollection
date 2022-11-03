@@ -1,18 +1,22 @@
-import { Entity, Column, PrimaryGeneratedColumn } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, OneToOne } from "typeorm";
+import { User } from "./user.entity";
 
 @Entity("contacts")
 class Contact {
   @PrimaryGeneratedColumn("uuid")
   readonly id: string;
 
-  @Column({ nullable: true })
-  linkedin: string;
+  @Column({ type: "text", nullable: true })
+  linkedin: string | null;
 
-  @Column({ nullable: true })
-  github: string;
+  @Column({ type: "text", nullable: true })
+  github: string | null;
 
-  @Column({ nullable: true })
-  phone: number;
+  @Column({ type: "text", nullable: true })
+  phone: string | null;
+
+  @OneToOne((type) => User, (contact) => Contact)
+  user: User;
 }
 
 export { Contact };
