@@ -11,7 +11,7 @@ const updateProjectService = async (
 
   const searchProject = await projectRepository.findOneBy({ id });
   if (!searchProject) {
-    throw new AppError("Project Not Found", 404);
+    throw new AppError("id is read only", 400);
   } else {
     projectRepository.update(id, {
       name: name ? name : searchProject.name,
