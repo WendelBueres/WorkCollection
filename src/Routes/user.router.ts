@@ -1,10 +1,12 @@
-import { Router } from 'express'
+import { Router } from "express";
+import createUserController from "../controllers/user/createUser.controller";
+import deleteUserController from "../controllers/user/deleteUser.controller";
 
-const userRoutes = Router()
+const userRoutes = Router();
 
-userRoutes.post("", )
-userRoutes.get("", )
-userRoutes.patch("/:id", )
-userRoutes.delete("/:id", )
+userRoutes.post("", createUserController);
+userRoutes.get("");
+userRoutes.patch("/:id");
+userRoutes.delete("/:id", deleteUserController);
 
-export default userRoutes
+export default userRoutes;

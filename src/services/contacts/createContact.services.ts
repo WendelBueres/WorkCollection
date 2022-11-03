@@ -1,5 +1,5 @@
-import AppDataSource from "../data-source";
-import { Contact } from "../entities/contact.entity";
+import AppDataSource from "../../data-source";
+import { Contact } from "../../entities/contact.entity";
 
 const createContactService = async ({ linkedin, github, phone }: Contact) => {
   const contactRepository = AppDataSource.getRepository(Contact);

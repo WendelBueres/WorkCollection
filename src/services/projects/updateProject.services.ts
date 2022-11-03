@@ -1,7 +1,7 @@
-import AppDataSource from "../data-source";
-import { Project } from "../entities/project.entity";
-import { AppError } from "../errors";
-import { IProjectRequest } from "../interfaces/projects";
+import AppDataSource from "../../data-source";
+import { Project } from "../../entities/project.entity";
+import { AppError } from "../../errors";
+import { IProjectRequest } from "../../interfaces/projects";
 
 const updateProjectService = async (
   id: string,

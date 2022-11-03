@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import deleteProjectService from "../../services/deleteProject.services";
+import deleteProjectService from "../../services/projects/deleteProject.services";
 
 const deleteProjectController = async (req: Request, res: Response) => {
   const id: string = req.params.id;

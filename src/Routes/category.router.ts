@@ -1,10 +1,13 @@
-import { Router } from 'express'
+import { Router } from "express";
+import deleteContactController from "../controllers/contacts/deleteContect.controller";
+import listContactController from "../controllers/contacts/listContact.controller";
+import createContactService from "../services/contacts/createContact.services";
 
-const categoryRoutes = Router()
+const categoryRoutes = Router();
 
-categoryRoutes.post("", )
-categoryRoutes.get("", )
-categoryRoutes.patch("/:id", )
-categoryRoutes.delete("/:id", )
+categoryRoutes.post("", createContactService);
+categoryRoutes.get("", listContactController);
+categoryRoutes.patch("/:id");
+categoryRoutes.delete("/:id", deleteContactController);
 
-export default categoryRoutes
+export default categoryRoutes;

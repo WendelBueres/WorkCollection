@@ -1,7 +1,6 @@
-import AppDataSource from "../data-source";
-import { Project } from "../entities/project.entity";
-import { AppError } from "../errors";
-// import { IProject } from "../interfaces/projects";
+import AppDataSource from "../../data-source";
+import { Project } from "../../entities/project.entity";
+import { AppError } from "../../errors";
 
 const deleteProjectService = async (id: string) => {
   const projectRepository = AppDataSource.getRepository(Project);
@@ -17,7 +16,6 @@ const deleteProjectService = async (id: string) => {
       .from(Project)
       .where("id = :id", { id: id })
       .execute();
-    // console.log(projectUpdate)
     return projectUpdate;
   }
 };
