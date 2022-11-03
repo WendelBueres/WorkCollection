@@ -3,6 +3,7 @@ import { hash } from "bcryptjs";
 import { User } from "../../entities/user.entity";
 import { AppError } from "../../errors";
 import { IUserRequest } from "../../interfaces/user";
+import { Contact } from "../../entities/contact.entity";
 
 const createUserService = async ({
   name,
@@ -42,6 +43,11 @@ const createUserService = async ({
     image,
     bio,
   });
+
+  const contactRepository = AppDataSource.getRepository(Contact);
+
+  user.contact = contactRepository.create(user.contact);
+  user.contact = await contactRepository.save(user.contact);
 
   await userRepository.save(user);
 
