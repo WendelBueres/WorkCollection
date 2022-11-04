@@ -1,10 +1,5 @@
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  ManyToOne,
-  JoinColumn,
-} from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany } from "typeorm";
+import { ProjectTech } from "./projectTechs.entity";
 import { User } from "./user.entity";
 
 @Entity("projects")
@@ -24,12 +19,11 @@ class Project {
   @Column()
   link: string;
 
-  @Column()
-  technology: string;
-
   @ManyToOne((type) => User, (users) => users.project)
-  @JoinColumn()
   user: User;
+
+  @OneToMany((type) => ProjectTech, (projectsTech) => projectsTech.projects)
+  projectTechs: ProjectTech;
 }
 
 export { Project };
