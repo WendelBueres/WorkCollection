@@ -11,6 +11,7 @@ const createUserService = async ({
   password,
   image,
   bio,
+  contact,
 }: IUserRequest) => {
   if (!name) {
     throw new AppError("name is a field required");
@@ -36,15 +37,17 @@ const createUserService = async ({
   }
 
   const hashedPassword = await hash(password, 10);
+
+  const contactRepository = AppDataSource.getRepository(Contact);
+
   const user = userRepository.create({
     name,
     email,
     password: hashedPassword,
     image,
     bio,
+    contact,
   });
-
-  const contactRepository = AppDataSource.getRepository(Contact);
 
   user.contact = contactRepository.create(user.contact);
   user.contact = await contactRepository.save(user.contact);

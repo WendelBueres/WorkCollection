@@ -3,27 +3,23 @@ import { Project } from "../../entities/project.entity";
 import { AppError } from "../../errors";
 import { IProjectRequest } from "../../interfaces/projects";
 
-const updateProjectService = async (
-  id: string,
-  { name, category, image, link, technology, userId }: IProjectRequest
-) => {
+const updateProjectService = async (id: string, data: any) => {
   const projectRepository = AppDataSource.getRepository(Project);
 
-  const searchProject = await projectRepository.findOneBy({ id });
-  if (!searchProject) {
-    throw new AppError("id is read only", 400);
+  const projectExist = await projectRepository.findOneBy({ id: id });
+  if (!projectExist) {
+    throw new AppError("project not found", 404);
   }
-  await projectRepository.update(id, {
-    name: name ? name : searchProject.name,
-    category: category ? category : searchProject.category,
-    image: image ? image : searchProject.image,
-    link: link ? link : searchProject.link,
-    technology: technology ? technology : searchProject.technology,
-  });
 
-  const projectUpdated = await projectRepository.findOneBy({ id });
+  if (data.id) {
+    throw new AppError("id is only ready");
+  }
 
-  return projectUpdated!;
+  await projectRepository.update(id, data);
+
+  const projectUpdated = await projectRepository.findOneBy({ id: id });
+
+  return projectUpdated;
 };
 
 export default updateProjectService;
