@@ -6,6 +6,7 @@ import {
   mockedProject,
   mockedProjectPatchId,
   mockedProjectPatchName,
+  mockedUser,
 } from "../../mocks";
 
 let projectIdTest: string;
@@ -27,11 +28,14 @@ describe("/projects", () => {
     await connection.destroy();
   });
 
-  test("POST/projects - must be able to create the contacts", async () => {
+  test("POST/projects - must be able to create the project", async () => {
+    const user = await request(app).post("/users").send(mockedUser);
+    mockedProject.userId = user.body.id;
     const res = await request(app).post("/projects").send(mockedProject);
 
     expect(res.body).toHaveProperty("name");
     expect(res.body).toHaveProperty("id");
+    projectIdTest = res.body.id;
     expect(res.body).toHaveProperty("category");
     expect(res.body).toHaveProperty("image");
     expect(res.body).toHaveProperty("technology");
@@ -42,7 +46,7 @@ describe("/projects", () => {
     expect(res.status).toBe(201);
   });
 
-  test("PATCH/projects - must be able to patch the contacts", async () => {
+  test("PATCH/projects - must be able to patch the project", async () => {
     const res = await request(app)
       .patch(`/projects/${projectIdTest}`)
       .send(mockedProjectPatchName);

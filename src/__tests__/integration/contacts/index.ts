@@ -78,4 +78,14 @@ describe("/contacts", () => {
     expect(res.body.message).toEqual("id is read only");
     expect(res.status).toBe(400);
   });
+
+  test("DELETE/contacts - should be able to delete contact github", async () => {
+    const res = await request(app).delete(`/contacts/${userId}/github`).send();
+    expect(res.status).toBe(204);
+  });
+
+  test("DELETE/contacts - should be able to delete all contacts", async () => {
+    const res = await request(app).delete(`/contacts/${userId}/`).send();
+    expect(res.status).toBe(204);
+  });
 });
