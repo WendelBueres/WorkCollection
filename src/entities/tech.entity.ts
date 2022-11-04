@@ -2,28 +2,19 @@ import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany } from "ty
 import { ProjectTech } from "./projectTechs.entity";
 import { User } from "./user.entity";
 
-@Entity("projects")
-class Project {
+@Entity("techs")
+class Tech {
   @PrimaryGeneratedColumn("uuid")
   readonly id: string;
 
   @Column()
   name: string;
 
-  @Column()
-  category: string;
-
-  @Column()
-  image: string;
-
-  @Column()
-  link: string;
-
-  @ManyToOne((type) => User, (users) => users.project)
+  @ManyToOne((type) => User, (users) => users.techs)
   user: User;
 
-  @OneToMany((type) => ProjectTech, (projectsTech) => projectsTech.projects)
+  @OneToMany((types) => ProjectTech, (projectTechs) => projectTechs.techs)
   projectTechs: ProjectTech;
 }
 
-export { Project };
+export { Tech }

@@ -9,6 +9,7 @@ import {
 } from "typeorm";
 import { Contact } from "./contact.entity";
 import { Project } from "./project.entity";
+import { Tech } from "./tech.entity";
 
 @Entity("users")
 class User {
@@ -31,14 +32,21 @@ class User {
   @Column()
   bio: string;
 
-  @OneToOne((type) => Contact, (user) => User, { eager: true })
+  @OneToOne((type) => Contact, (user) => User, { 
+    eager: true,
+  })
   @JoinColumn()
   contact: Contact;
 
   @OneToMany((type) => Project, (projects) => projects.user, {
     eager: true,
   })
-  project: Project[];
+  project: Project;
+
+  @OneToMany((type) => Tech, (techs) => techs.user, {
+    eager: true,
+  })
+  techs: Tech;
 }
 
 export { User };
