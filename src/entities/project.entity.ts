@@ -1,4 +1,10 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, OneToMany } from "typeorm";
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  OneToMany,
+} from "typeorm";
 import { ProjectTech } from "./projectTechs.entity";
 import { User } from "./user.entity";
 
@@ -13,8 +19,8 @@ class Project {
   @Column()
   category: string;
 
-  @Column()
-  image: string;
+  @Column({ type: "text", nullable: true, default: null })
+  image: string | null;
 
   @Column()
   link: string;
@@ -24,6 +30,12 @@ class Project {
 
   @OneToMany((type) => ProjectTech, (projectsTech) => projectsTech.projects)
   projectTechs: ProjectTech;
+
+  @Column()
+  userId: string;
+
+  @Column()
+  technology: string;
 }
 
 export { Project };
