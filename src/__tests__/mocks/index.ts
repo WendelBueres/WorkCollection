@@ -101,9 +101,13 @@ export const mockedContactPatchId: any = {
 };
 
 export const mockedTechPost: any = {
-  name: 'javaScript',
+  name: "javaScript",
 };
 
 export const MockedPatchTestTech: any = {
-  name: 'JavaScript'
+  name: "TypeScript",
+}
+
+export const MockedPatchTestTechID: any = {
+  id: "12393h47f4",
 }
