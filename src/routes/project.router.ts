@@ -9,7 +9,7 @@ const projectRoutes = Router();
 
 projectRoutes.post("", hasAuthMiddleware, createProjectController);
 projectRoutes.get("", listProjectsController);
-projectRoutes.patch("/:id", updateProjectController);
-projectRoutes.delete("/:id", deleteContactController);
+projectRoutes.patch("/:id", hasAuthMiddleware, updateProjectController);
+projectRoutes.delete("/:id", hasAuthMiddleware, deleteContactController);
 
 export default projectRoutes;
