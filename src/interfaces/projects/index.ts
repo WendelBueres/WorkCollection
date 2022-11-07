@@ -1,10 +1,9 @@
 export interface IProjectRequest {
   name: string;
   category: string;
-  image: string;
+  image?: string | null;
   link: string;
   technology: string;
-  userId: string;
 }
 
 export interface IProject extends IProjectRequest {
