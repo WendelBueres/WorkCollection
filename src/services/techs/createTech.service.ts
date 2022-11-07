@@ -1,19 +1,32 @@
 import AppDataSource from "../../data-source";
+import { User } from "../../entities/user.entity";
 import { Tech } from "../../entities/tech.entity";
-import { ITechs, ITechsRequest } from "../../interfaces/techs";
+import { AppError } from "../../errors";
+import { ITechsRequest } from "../../interfaces/techs";
 
-const createTechService = async(data: ITechsRequest, id: any): Promise<Tech> => {
-    
-    const techsRepository = AppDataSource.getRepository(Tech)
+const createTechService = async (data: ITechsRequest, id: any) => {
+  const userRepository = AppDataSource.getRepository(User);
+  const techsRepository = AppDataSource.getRepository(Tech);
 
-    const createdTech = techsRepository.create({
-        name: data.name,
-        user: id
-    })
+  if (!id) {
+    throw new AppError("id not found");
+  }
 
-    await techsRepository.save(createdTech)
+  const userExist = await userRepository.findOneBy({ id: id });
 
-    return createdTech
-}
+  if (!data.name) {
+    throw new AppError("name is a field required");
+  }
+
+  if (!userExist) {
+    throw new AppError(`user not found`);
+  }
+
+  let createdTech = techsRepository.create(data);
+  createdTech.user = userExist;
+  createdTech = await techsRepository.save(createdTech);
+
+  return createdTech;
+};
 
 export default createTechService;

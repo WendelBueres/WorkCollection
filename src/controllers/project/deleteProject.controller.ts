@@ -2,9 +2,11 @@ import { Request, Response } from "express";
 import deleteProjectService from "../../services/projects/deleteProject.services";
 
 const deleteProjectController = async (req: Request, res: Response) => {
+  const userId = req.user.id;
+
   const id: string = req.params.id;
 
-  const deleteProject = await deleteProjectService(id);
+  await deleteProjectService(id, userId);
 
   return res.status(202).json({ message: "Successfully Deleted" });
 };

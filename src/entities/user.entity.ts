@@ -32,7 +32,7 @@ class User {
   @Column()
   bio: string;
 
-  @OneToOne((type) => Contact, (user) => User, { 
+  @OneToOne((type) => Contact, (user) => User, {
     eager: true,
   })
   @JoinColumn()
