@@ -7,9 +7,11 @@ import {
   mockedProjectPatchId,
   mockedProjectPatchName,
   mockedUser,
+  mockedUserLogin,
 } from "../../mocks";
 
 let projectIdTest: string;
+let token: string;
 
 describe("/projects", () => {
   let connection: DataSource;
@@ -29,9 +31,14 @@ describe("/projects", () => {
   });
 
   test("POST/projects - must be able to create the project", async () => {
-    const user = await request(app).post("/users").send(mockedUser);
-    mockedProject.userId = user.body.id;
-    const res = await request(app).post("/projects").send(mockedProject);
+    await request(app).post("/users").send(mockedUser);
+    const login = await request(app).post("/login").send(mockedUserLogin);
+    token = login.body.token;
+    token = `Bearer ${token}`;
+    const res = await request(app)
+      .post("/projects")
+      .set("Authorization", token)
+      .send(mockedProject);
 
     expect(res.body).toHaveProperty("name");
     expect(res.body).toHaveProperty("id");
@@ -39,7 +46,6 @@ describe("/projects", () => {
     expect(res.body).toHaveProperty("category");
     expect(res.body).toHaveProperty("image");
     expect(res.body).toHaveProperty("technology");
-    expect(res.body).toHaveProperty("userId");
     expect(res.body.name).toBe("Floricultura Online");
     expect(res.body.image).toBe("imageproject.com/img.jpeg");
     expect(res.body.link).toBe("floresonline.com");
@@ -49,6 +55,7 @@ describe("/projects", () => {
   test("PATCH/projects - must be able to patch the project", async () => {
     const res = await request(app)
       .patch(`/projects/${projectIdTest}`)
+      .set("Authorization", token)
       .send(mockedProjectPatchName);
 
     expect(res.body).toHaveProperty("name");
@@ -64,6 +71,7 @@ describe("/projects", () => {
   test("PATCH/projects - must not be able to alter project id", async () => {
     const res = await request(app)
       .patch(`/projects/${projectIdTest}`)
+      .set("Authorization", token)
       .send(mockedProjectPatchId);
 
     expect(res.body).toHaveProperty("message");

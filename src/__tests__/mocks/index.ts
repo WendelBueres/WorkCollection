@@ -86,7 +86,6 @@ export const mockedProject: IProjectRequest = {
   image: "imageproject.com/img.jpeg",
   link: "floresonline.com",
   technology: "React, TypeScript",
-  userId: createdUserIdTest,
 };
 
 export const mockedProjectPatchName: any = {

@@ -3,7 +3,7 @@ import { User } from "../../entities/user.entity";
 
 const getUsersServices = async () => {
   const usersRepository = AppDataSource.getRepository(User);
-  const users = await usersRepository.find({ relations: { contact: true } });
+  const users = await usersRepository.find();
 
   return users;
 };
