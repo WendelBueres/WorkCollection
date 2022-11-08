@@ -1,0 +1,446 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "WorkCollection API",
+    "description": "API feita para coleção de projetos",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://workcollection.herokuapp.com/",
+      "description": "API produção"
+    }
+  ],
+  "paths": {
+    "/login": {
+      "post": {
+        "summary": "Login User",
+        "description": "Rota responsavel pelo Login",
+        "tags": ["Login"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Login"
+              },
+              "examples": {
+                "login": {
+                  "value": {
+                    "email": "joão@mail.com",
+                    "password": "12345678"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "token: "
+          },
+          "400": { "description": "email is a field required" }
+        }
+      }
+    },
+    "/users": {
+      "post": {
+        "summary": "Create User",
+        "description": "Rota responsavel por criar Usuario",
+        "tags": ["User"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUser"
+              },
+              "examples": {
+                "user": {
+                  "value": {
+                    "name": "Joao Guilherme",
+                    "email": "joão@mail.com",
+                    "password": "12345678",
+                    "image": "https://imagem.com",
+                    "bio": "Estudante full Stack",
+                    "contact": {
+                      "linkedin": "https://linkedin.com/JoaoGuilherme",
+                      "github": "https://github.com/JoaoGuilherme",
+                      "phone": "99999999999"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/CreateUser" }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Get All Users",
+        "description": "Rota responsavel por consultar todos Usuarios",
+        "tags": ["User"],
+        "security": [{ "BearerAuth": [] }],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/CreateUser" }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/{id}": {
+      "get": {
+        "summary": "Get User by Id",
+        "description": "Rota responsavel por consultar Usuario por Id",
+        "tags": ["User"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Usuario pelo Id",
+            "required": "true"
+          }
+        ],
+        "security": [{ "BearerAuth": [] }],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/CreateUser"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete User by Id",
+        "description": "Rota responsavel por deletar Usuario por Id",
+        "tags": ["User"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Usuario pelo Id",
+            "required": "true"
+          }
+        ],
+        "security": [{ "BearerAuth": [] }],
+        "responses": {
+          "204": {
+            "description": "User deleted with sucess!"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        }
+      },
+      "patch": {
+        "summary": "Update User by Id",
+        "description": "Rota responsavel por atualizar Usuario por Id",
+        "tags": ["User"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Usuario pelo Id",
+            "required": "true"
+          }
+        ],
+        "security": [{ "BearerAuth": [] }],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/projects": {
+      "post": {
+        "summary": "Create Project",
+        "description": "Rota responsavel por criar Projeto",
+        "tags": ["Project"],
+        "security": [{ "BearerAuth": [] }],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateProject"
+              },
+              "examples": {
+                "project": {
+                  "value": {
+                    "name": "Site Base",
+                    "category": "Front End",
+                    "image": "https://imagem.com",
+                    "link": "https://github.com/projeto"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Get All Projects",
+        "description": "Rota responsavel por consultar todos os projetos",
+        "tags": ["Project"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateProject"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/projects/{id}": {
+      "delete": {
+        "summary": "Delete Project by Id",
+        "description": "Rota responsavel por deletar Projeto pelo Id",
+        "tags": ["Project"],
+        "security": [{ "BearerAuth": [] }],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUser"
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "summary": "Update Project by Id",
+        "description": "Rota responsavel por atualizar Projeto pelo Id",
+        "tags": ["Project"],
+        "security": [{ "BearerAuth": [] }],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUser"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/technologies": {
+      "post": {
+        "summary": "Create Tecnhologie",
+        "description": "Rota responsavel por criar Technologias",
+        "tags": ["Technologies"],
+        "security": [{ "BearerAuth": [] }],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateTechnolgies"
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Get All Technologies",
+        "description": "Rota responsavel por consultar todas Tecnologias",
+        "tags": ["Technologies"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUser"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/technologies/{id}": {
+      "delete": {
+        "summary": "Delete Technologie by Id",
+        "description": "Rota responsavel por deletar Technologies pelo Id",
+        "tags": ["Technologies"],
+        "security": [{ "BearerAuth": [] }],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUser"
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "summary": "Update Technologies by Id",
+        "description": "Rota responsavel por Atualizar Technologias pelo Id",
+        "tags": ["Technologies"],
+        "security": [{ "BearerAuth": [] }],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUser"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/contacts": {
+      "get": {
+        "summary": "Get All Contacts",
+        "description": "Rota responsavel por consultar contatos",
+        "tags": ["Contacts"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Contacts"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/contacts/{id}": {
+      "delete": {
+        "summary": "Delete Contact by Id",
+        "description": "Rota responsavel por deletar Contatos",
+        "tags": ["Contacts"],
+        "security": [{ "BearerAuth": [] }],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUser"
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "summary": "Update Contact by Id",
+        "description": "Rota responsavel por atualizar Contato pelo Id",
+        "tags": ["Contacts"],
+        "security": [{ "BearerAuth": [] }],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUser"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/contacts/{id}/{contact}": {
+      "delete": {
+        "summary": "Delete a only Contact by Id",
+        "description": "Rota responsavel por deletar um unico contato",
+        "tags": ["Contacts"],
+        "security": [{ "BearerAuth": [] }],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUser"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Login": {
+        "type": "object",
+        "properties": {
+          "email": { "type": "string" },
+          "password": { "type": "string" }
+        }
+      },
+      "CreateUser": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "email": { "type": "string" },
+          "password": { "type": "string" },
+          "image": { "type": "string" },
+          "bio": { "type": "string" },
+          "contact": {
+            "type": "object",
+            "properties": {
+              "linkedin": { "type": "string" },
+              "github": { "type": "string" },
+              "phone": { "type": "string" }
+            }
+          }
+        }
+      },
+      "CreateProject": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "category": { "type": "string" },
+          "image": { "type": "string" },
+          "link": { "type": "string" }
+        }
+      },
+      "CreateTechnolgies": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" }
+        }
+      },
+      "Contacts": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "contact": {
+            "type": "object",
+            "properties": {
+              "linkedin": { "type": "string" },
+              "github": { "type": "string" },
+              "phone": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}
