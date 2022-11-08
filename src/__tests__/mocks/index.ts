@@ -1,5 +1,6 @@
 import { IContactRequest } from "../../interfaces/contact";
 import { IProjectRequest } from "../../interfaces/projects";
+import { ITechRegister } from "../../interfaces/techs";
 import { IUserLogin, IUserRequest } from "../../interfaces/user";
 import { createdUserIdTest } from "../integration/users";
 
@@ -85,11 +86,24 @@ export const mockedProject: IProjectRequest = {
   category: "Front-End",
   image: "imageproject.com/img.jpeg",
   link: "floresonline.com",
-  technology: "React, TypeScript",
+  techsId: [] as ITechRegister[],
+  userId: "",
 };
 
 export const mockedProjectPatchName: any = {
   name: "Flores Online",
+};
+
+export const mockedTech: any = {
+  name: "React",
+};
+
+export const mockedTech2: any = {
+  name: "TypeScript",
+};
+
+export const mockedTech3: any = {
+  name: "JavaScript",
 };
 
 export const mockedProjectPatchId: any = {
