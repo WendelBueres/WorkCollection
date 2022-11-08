@@ -169,6 +169,31 @@
           }
         ],
         "security": [{ "BearerAuth": [] }],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUser"
+              },
+              "examples": {
+                "Update": {
+                  "value": {
+                    "name": "Joao Victor",
+                    "email": "joaoVic@mail.com",
+                    "password": "12345678910111213",
+                    "image": "https://imagem.com",
+                    "bio": "Estudante front end",
+                    "contact": {
+                      "linkedin": "https://linkedin.com/JoaoVictor",
+                      "github": "https://github.com/JoaoVictor",
+                      "phone": "88888888888"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "OK"
