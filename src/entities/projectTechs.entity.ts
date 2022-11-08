@@ -1,4 +1,11 @@
-import { Entity, PrimaryGeneratedColumn, CreateDateColumn, ManyToOne } from "typeorm";
+import { Exclude } from "class-transformer";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  CreateDateColumn,
+  ManyToOne,
+  Column,
+} from "typeorm";
 import { Project } from "./project.entity";
 import { Tech } from "./tech.entity";
 
@@ -10,11 +17,20 @@ class ProjectTech {
   @CreateDateColumn()
   createdAt: Date;
 
-  @ManyToOne(() => Tech)
+  @ManyToOne(() => Tech, (techs) => techs.projects, {
+    onDelete: "CASCADE",
+    eager: true,
+  })
   techs: Tech;
 
-  @ManyToOne(() => Project)
-  projects: Project;   
+  @ManyToOne(() => Project, (project) => project.techs, { onDelete: "CASCADE" })
+  projects: Project;
+
+  @Column({ select: false })
+  techsId: string;
+
+  @Column({ select: false })
+  projectsId: string;
 }
 
-export { ProjectTech }
+export { ProjectTech };
