@@ -7,8 +7,8 @@ import hasAuthMiddleware from "../middlewares/hasAuth.middleware";
 const contactRoutes = Router();
 
 contactRoutes.get("", listContactController);
-contactRoutes.patch("/:id", hasAuthMiddleware, updateContactController);
-contactRoutes.delete("/:id", hasAuthMiddleware, deleteContactController);
-contactRoutes.delete("/:id/:contact", hasAuthMiddleware, deleteContactController);
+contactRoutes.patch("", hasAuthMiddleware, updateContactController);
+contactRoutes.delete("", hasAuthMiddleware, deleteContactController);
+contactRoutes.delete("/:contact", hasAuthMiddleware, deleteContactController);
 
 export default contactRoutes;
