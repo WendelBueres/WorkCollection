@@ -8,10 +8,12 @@ import {
   mockedContactPatchId,
   mockedContactPhone,
   mockedUser,
+  mockedUserLogin,
 } from "../../mocks";
 
 describe("/contacts", () => {
   let userId: string;
+  let token: string;
   let connection: DataSource;
 
   beforeAll(async () => {
@@ -29,10 +31,13 @@ describe("/contacts", () => {
   });
 
   test("PATCH/contacts - must be able to patch the contacts", async () => {
-    const user = await request(app).post("/users").send(mockedUser);
-    userId = await user.body.id;
+    await request(app).post("/users").send(mockedUser);
+    const login = await request(app).post("/login").send(mockedUserLogin);
+    token = login.body.token;
+    token = `Bearer ${token}`;
     const res = await request(app)
-      .patch(`/contacts/${userId}`)
+      .patch(`/contacts`)
+      .set("Authorization", token)
       .send(mockedContactGithub);
 
     expect(res.body).toHaveProperty("id");
@@ -45,7 +50,8 @@ describe("/contacts", () => {
 
   test("PATCH/contacts - must be able to patch the contacts", async () => {
     const res = await request(app)
-      .patch(`/contacts/${userId}`)
+      .patch(`/contacts`)
+      .set("Authorization", token)
       .send(mockedContactLinkedin);
 
     expect(res.body).toHaveProperty("id");
@@ -58,7 +64,8 @@ describe("/contacts", () => {
 
   test("PATCH/contacts - must be able to patch the contacts", async () => {
     const res = await request(app)
-      .patch(`/contacts/${userId}`)
+      .patch(`/contacts`)
+      .set("Authorization", token)
       .send(mockedContactPhone);
 
     expect(res.body).toHaveProperty("id");
@@ -71,7 +78,8 @@ describe("/contacts", () => {
 
   test("PATCH/contacts - must not be able to alter user id", async () => {
     const res = await request(app)
-      .patch(`/contacts/${userId}`)
+      .patch(`/contacts`)
+      .set("Authorization", token)
       .send(mockedContactPatchId);
 
     expect(res.body).toHaveProperty("message");
@@ -80,12 +88,18 @@ describe("/contacts", () => {
   });
 
   test("DELETE/contacts - should be able to delete contact github", async () => {
-    const res = await request(app).delete(`/contacts/${userId}/github`).send();
+    const res = await request(app)
+      .delete(`/contacts/github`)
+      .set("Authorization", token)
+      .send();
     expect(res.status).toBe(204);
   });
 
   test("DELETE/contacts - should be able to delete all contacts", async () => {
-    const res = await request(app).delete(`/contacts/${userId}/`).send();
+    const res = await request(app)
+      .delete(`/contacts`)
+      .set("Authorization", token)
+      .send();
     expect(res.status).toBe(204);
   });
 });
