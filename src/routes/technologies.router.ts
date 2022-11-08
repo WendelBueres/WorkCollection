@@ -10,8 +10,8 @@ const technologiesRouter = Router();
 
 technologiesRouter.post("", hasAuthMiddleware, createTechController);
 technologiesRouter.get("", listTechsController);
-technologiesRouter.patch("/:id", updateTechController);
 technologiesRouter.get("/:id", listTechsByIdController);
-technologiesRouter.delete("/:id", deleteTechController);
+technologiesRouter.patch("/:id", hasAuthMiddleware, updateTechController);
+technologiesRouter.delete("/:id", hasAuthMiddleware, deleteTechController);
 
 export default technologiesRouter;

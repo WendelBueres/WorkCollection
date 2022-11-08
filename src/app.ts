@@ -7,9 +7,12 @@ import contactRoutes from "./routes/contact.router";
 import projectRoutes from "./routes/project.router";
 import technologiesRouter from "./routes/technologies.router";
 import { handleErrorMidleware } from "./middlewares/handleError.midleware";
+import swaggerUi from "swagger-ui-express";
+import swaggerDocs from "./swagger.json";
 const app = express();
 
 app.use(express.json());
+app.use("/documentation", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 app.use("/users", userRoutes);
 app.use("/login", loginRoutes);
 app.use("/projects", projectRoutes);
