@@ -23,8 +23,8 @@ const createTechService = async (data: ITechsRequest, id: any) => {
   }
 
   let createdTech = techsRepository.create(data);
-  createdTech.user = userExist;
-  createdTech = await techsRepository.save(createdTech);
+  createdTech.userId = userExist.id;
+  await techsRepository.save(createdTech);
 
   return createdTech;
 };

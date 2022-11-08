@@ -6,11 +6,19 @@ import {
   mockedProject,
   mockedProjectPatchId,
   mockedProjectPatchName,
+  mockedTech,
+  mockedTech2,
+  mockedTech3,
   mockedUser,
   mockedUserLogin,
 } from "../../mocks";
+import { ITechRegister, ITechs } from "../../../interfaces/techs";
 
 let projectIdTest: string;
+let techArray: ITechRegister[];
+let tech: { id: string };
+let tech2: { id: string };
+let tech3: { id: string };
 let token: string;
 
 describe("/projects", () => {
@@ -35,6 +43,23 @@ describe("/projects", () => {
     const login = await request(app).post("/login").send(mockedUserLogin);
     token = login.body.token;
     token = `Bearer ${token}`;
+    const resTech1 = await request(app)
+      .post("/technologies")
+      .set("Authorization", token)
+      .send(mockedTech);
+    const resTech2 = await request(app)
+      .post("/technologies")
+      .set("Authorization", token)
+      .send(mockedTech2);
+    const resTech3 = await request(app)
+      .post("/technologies")
+      .set("Authorization", token)
+      .send(mockedTech3);
+    tech = { id: resTech1.body.id };
+    tech2 = { id: resTech2.body.id };
+    tech3 = { id: resTech3.body.id };
+    techArray = [tech, tech2, tech3];
+    mockedProject.techsId = techArray;
     const res = await request(app)
       .post("/projects")
       .set("Authorization", token)
@@ -45,7 +70,7 @@ describe("/projects", () => {
     projectIdTest = res.body.id;
     expect(res.body).toHaveProperty("category");
     expect(res.body).toHaveProperty("image");
-    expect(res.body).toHaveProperty("technology");
+    expect(res.body).toHaveProperty("techs");
     expect(res.body.name).toBe("Floricultura Online");
     expect(res.body.image).toBe("imageproject.com/img.jpeg");
     expect(res.body.link).toBe("floresonline.com");
