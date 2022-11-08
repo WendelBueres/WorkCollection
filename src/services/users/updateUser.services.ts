@@ -1,23 +1,29 @@
+import { hash } from "bcryptjs";
 import AppDataSource from "../../data-source";
 import { User } from "../../entities/user.entity";
 import { AppError } from "../../errors";
 
-const updateUserService = async (data: any, id: string) => {
+const updateUserService = async (data: any, id: string): Promise<User> => {
   const userRepository = AppDataSource.getRepository(User);
-  const userExist = await userRepository.findOneBy({ id: id });
+  const findUser = await userRepository.findOneBy({id});
 
-  if (!userExist) {
-    throw new AppError("User not found");
+  if (!findUser) {
+    throw new AppError("User not found", 404);
+  }
+  
+  if(data.id){
+    throw new AppError("id is read only", 400);
   }
 
-  if (data.id) {
-    throw new AppError("id is read only");
+  if(data.password){
+    data.password = await hash(data.password, 10)
   }
 
-  await userRepository.update(id, data);
-  const update = await userRepository.findOneBy({ id: id });
+  await userRepository.update(id, data)
 
-  return update;
+  const user = await userRepository.findOneBy({id})
+    
+  return user!;
 };
 
 export default updateUserService;
