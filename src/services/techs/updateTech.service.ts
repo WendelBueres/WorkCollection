@@ -3,18 +3,21 @@ import { Tech } from "../../entities/tech.entity";
 import { AppError } from "../../errors";
 import { ITechsRequest } from "../../interfaces/techs";
 
-const updateTechService = async (id: string, data: ITechsRequest) => {
+const updateTechService = async (id: string, data: any) => {
   const TechRepository = AppDataSource.getRepository(Tech);
 
-  const searchTech = await TechRepository.findOneBy({ id });
+  const searchTech = await TechRepository.findOneBy({ id: id });
   if (!searchTech) {
-    throw new AppError("id is read only", 400);
+    throw new AppError("technology not found", 404);
   }
-  await TechRepository.update(id, {
-    name: data.name ? data.name : searchTech.name
-  });
+  
+  if (data.id) {
+    throw new AppError("id is read only")
+  }
 
-  const TechUpdated = await TechRepository.findOneBy({ id });
+  await TechRepository.update(id, data);
+
+  const TechUpdated = await TechRepository.findOneBy({ id: id });
 
   return TechUpdated!;
 };
