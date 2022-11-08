@@ -11,9 +11,9 @@ services:
     depends_on:
       workcollection:
         condition: service_healthy
+    command: bash -c "yarn typeorm migration:run -d src/data-source.ts && yarn dev"
     volumes:
       - .:/app
-    command: yarn typeorm migration:run -d src/data-source.ts && yarn dev
 
   workcollection:
     container_name: workcollection
@@ -29,5 +29,3 @@ services:
       timeout: 5s
       retries: 5
       start_period: 5s
-   
-
