@@ -13,13 +13,16 @@ import {
   mockedUserLogin,
   mockedUserLogin2,
 } from "../../mocks";
-import { ITechRegister, ITechs } from "../../../interfaces/techs";
+import { ITechRegisterRegister } from "../../../interfaces/techs";
 
 let projectIdTest: string;
-let techArray: ITechRegister[];
+let techArray: ITechRegisterRegister[];
 let tech: { id: string };
 let tech2: { id: string };
 let tech3: { id: string };
+let techName: { name: string };
+let techName2: { name: string };
+let techName3: { name: string };
 let token: string;
 let token2: string;
 
@@ -40,7 +43,7 @@ describe("/projects", () => {
     await connection.destroy();
   });
 
-  test("POST/projects - must be able to create the project", async () => {
+  test("POST/projects - should be able to create project by passing technology id and name", async () => {
     await request(app).post("/users").send(mockedUser);
     const login = await request(app).post("/login").send(mockedUserLogin);
     token = login.body.token;
@@ -60,6 +63,49 @@ describe("/projects", () => {
     tech = { id: resTech1.body.id };
     tech2 = { id: resTech2.body.id };
     tech3 = { id: resTech3.body.id };
+    techName = { name: resTech1.body.name };
+    techName2 = { name: resTech2.body.name };
+    techName3 = { name: resTech3.body.name };
+    techArray = [tech, techName, tech3];
+    mockedProject.techsId = techArray;
+    const res = await request(app)
+      .post("/projects")
+      .set("Authorization", token)
+      .send(mockedProject);
+
+    expect(res.body).toHaveProperty("name");
+    expect(res.body).toHaveProperty("id");
+    projectIdTest = res.body.id;
+    expect(res.body).toHaveProperty("category");
+    expect(res.body).toHaveProperty("image");
+    expect(res.body).toHaveProperty("techs");
+    expect(res.body.name).toBe("Floricultura Online");
+    expect(res.body.image).toBe("imageproject.com/img.jpeg");
+    expect(res.body.link).toBe("floresonline.com");
+    expect(res.status).toBe(201);
+  });
+
+  test("POST/projects - should be able to create project by passing technology name", async () => {
+    techArray = [techName, techName2, techName3];
+    mockedProject.techsId = techArray;
+    const res = await request(app)
+      .post("/projects")
+      .set("Authorization", token)
+      .send(mockedProject);
+
+    expect(res.body).toHaveProperty("name");
+    expect(res.body).toHaveProperty("id");
+    projectIdTest = res.body.id;
+    expect(res.body).toHaveProperty("category");
+    expect(res.body).toHaveProperty("image");
+    expect(res.body).toHaveProperty("techs");
+    expect(res.body.name).toBe("Floricultura Online");
+    expect(res.body.image).toBe("imageproject.com/img.jpeg");
+    expect(res.body.link).toBe("floresonline.com");
+    expect(res.status).toBe(201);
+  });
+
+  test("POST/projects - should be able to create project by passing technology id", async () => {
     techArray = [tech, tech2, tech3];
     mockedProject.techsId = techArray;
     const res = await request(app)

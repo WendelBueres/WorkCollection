@@ -1,6 +1,6 @@
 import { IContactRequest } from "../../interfaces/contact";
 import { IProjectRequest } from "../../interfaces/projects";
-import { ITechRegister } from "../../interfaces/techs";
+import { ITechRegisterRegister } from "../../interfaces/techs";
 import { IUserLogin, IUserRequest } from "../../interfaces/user";
 
 export const mockedUser: IUserRequest = {
@@ -99,7 +99,7 @@ export const mockedProject: IProjectRequest = {
   category: "Front-End",
   image: "imageproject.com/img.jpeg",
   link: "floresonline.com",
-  techsId: [] as ITechRegister[],
+  techsId: [] as ITechRegisterRegister[],
   userId: "",
 };
 
