@@ -4,6 +4,7 @@ import request from "supertest";
 import app from "../../../app";
 import {
   mockedUser,
+  mockedUser2,
   mockedUserErrorBio,
   mockedUserErrorEmail,
   mockedUserErrorName,
@@ -137,6 +138,25 @@ describe("/users", () => {
       .set("Authorization", token)
       .send();
     expect(res.status).toBe(204);
+  });
+
+  test("DELETE/users - user may not be able to delete a user who does not own it", async () => {
+    const login2 = await request(app).post("/login").send(mockedUser2);
+    token = login2.body.token;
+    token = `Bearer ${token}`;
+    const res = await request(app)
+      .delete(`/users/${createdUserIdTest}`)
+      .set("Authorization", token)
+      .send();
+    expect(res.status).toBe(403);
+  });
+
+  test("PATCH/users - user may not be able to patch a user who does not own it", async () => {
+    const res = await request(app)
+      .patch(`/users/${createdUserIdTest}`)
+      .set("Authorization", token)
+      .send(mockedUserPatch);
+    expect(res.status).toBe(403);
   });
 });
 

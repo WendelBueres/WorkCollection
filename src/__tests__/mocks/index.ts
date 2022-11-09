@@ -13,6 +13,15 @@ export const mockedUser: IUserRequest = {
   bio: "Olá, eu sou um dev!",
 };
 
+export const mockedUser2: IUserRequest = {
+  name: "Pedro",
+  email: "pedro@email.com",
+  image:
+    "https://media.istockphoto.com/vectors/green-alien-climbs-out-from-the-hole-of-space-with-stars-in-flat-vector-id1173828830?k=20&m=1173828830&s=612x612&w=0&h=bXd7sIQWbx7HJoDbvSb8BELPHZICLzgwioOaVmwIeJE=",
+  password: "123456789!",
+  bio: "Olá, eu sou um dev!",
+};
+
 export const mockedUserErrorName: any = {
   email: "marcia@email.com",
   bio: "Olá, sou uma dev!",
@@ -120,8 +129,8 @@ export const mockedTechPost: any = {
 
 export const MockedPatchTestTech: any = {
   name: "TypeScript",
-}
+};
 
 export const MockedPatchTestTechID: any = {
   id: "12393h47f4",
-}
+};
