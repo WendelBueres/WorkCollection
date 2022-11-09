@@ -12,12 +12,12 @@ import swaggerDocs from "./swagger.json";
 const app = express();
 
 app.use(express.json());
-app.use("/documentation", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 app.use("/users", userRoutes);
 app.use("/login", loginRoutes);
 app.use("/projects", projectRoutes);
 app.use("/contacts", contactRoutes);
 app.use("/technologies", technologiesRouter);
+app.use("/documentation", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 app.use(handleErrorMidleware);
 
 export default app;
