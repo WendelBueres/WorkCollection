@@ -78,6 +78,9 @@ describe("/projects", () => {
   });
 
   test("PATCH/projects - must be able to patch the project", async () => {
+    const login = await request(app).post("/login").send(mockedUserLogin);
+    token = login.body.token;
+    token = `Bearer ${token}`;
     const res = await request(app)
       .patch(`/projects/${projectIdTest}`)
       .set("Authorization", token)
@@ -87,8 +90,7 @@ describe("/projects", () => {
     expect(res.body).toHaveProperty("id");
     expect(res.body).toHaveProperty("category");
     expect(res.body).toHaveProperty("image");
-    expect(res.body).toHaveProperty("technology");
-    expect(res.body).toHaveProperty("userId");
+    expect(res.body).toHaveProperty("techs");
     expect(res.body.name).toBe("Flores Online");
     expect(res.status).toBe(200);
   });
