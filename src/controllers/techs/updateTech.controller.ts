@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
-import updateTechService from "../../services/techs/updateTech.service";
-
+import updateTechService from "../../services/techs/updateTech.services";
 
 const updateTechController = async (req: Request, res: Response) => {
   const id = req.params.id;
