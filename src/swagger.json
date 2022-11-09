@@ -459,7 +459,7 @@
           {
             "name": "contact",
             "in": "path",
-            "description": "Usuario pelo Id",
+            "description": "Contato",
             "required": "true"
           }
         ],
