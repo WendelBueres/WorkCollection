@@ -24,7 +24,6 @@ const createProjectService = async (data: IProjectRequest, userId: string) => {
     data.techsId.map(async (element) => {
       const { id } = element;
       const checkTech = await techRepository.findOneBy({ id: id });
-      console.log(checkTech);
       if (checkTech === null) {
         throw new AppError(`techId: ${id} not find`, 404);
       }
