@@ -203,7 +203,11 @@
                     "name": "Site Base",
                     "category": "Front End",
                     "image": "https://imagem.com",
-                    "link": "https://github.com/projeto"
+                    "link": "https://github.com/projeto",
+                    "techsId": [
+                      { "id": "id da tecnologia" },
+                      { "name": "ou nome da tecnologia" }
+                    ]
                   }
                 }
               }
