@@ -1,9 +1,11 @@
+import { Exclude } from "class-transformer";
 import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
   ManyToOne,
   OneToMany,
+  JoinTable,
 } from "typeorm";
 import { ProjectTech } from "./projectTechs.entity";
 import { User } from "./user.entity";
@@ -25,17 +27,18 @@ class Project {
   @Column()
   link: string;
 
-  @ManyToOne((type) => User, (users) => users.project)
+  @ManyToOne((type) => User, (users) => users.project, { onDelete: "CASCADE" })
   user: User;
 
-  @OneToMany((type) => ProjectTech, (projectsTech) => projectsTech.projects)
-  projectTechs: ProjectTech;
+  @OneToMany((type) => ProjectTech, (projectsTech) => projectsTech.projects, {
+    eager: true,
+    cascade: true,
+  })
+  techs: ProjectTech[];
 
   @Column()
+  @Exclude()
   userId: string;
-
-  @Column()
-  technology: string;
 }
 
 export { Project };

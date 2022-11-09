@@ -1,4 +1,3 @@
-import { Contact } from "../../entities/contact.entity";
 import { IContact, IContactRequest } from "../contact";
 
 export interface IUserRequest {

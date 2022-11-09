@@ -1,11 +1,20 @@
 import { IContactRequest } from "../../interfaces/contact";
 import { IProjectRequest } from "../../interfaces/projects";
+import { ITechRegisterRegister } from "../../interfaces/techs";
 import { IUserLogin, IUserRequest } from "../../interfaces/user";
-import { createdUserIdTest } from "../integration/users";
 
 export const mockedUser: IUserRequest = {
   name: "Jonas",
   email: "jonas@email.com",
+  image:
+    "https://media.istockphoto.com/vectors/green-alien-climbs-out-from-the-hole-of-space-with-stars-in-flat-vector-id1173828830?k=20&m=1173828830&s=612x612&w=0&h=bXd7sIQWbx7HJoDbvSb8BELPHZICLzgwioOaVmwIeJE=",
+  password: "123456789!",
+  bio: "Olá, eu sou um dev!",
+};
+
+export const mockedUser2: IUserRequest = {
+  name: "Pedro",
+  email: "pedro@email.com",
   image:
     "https://media.istockphoto.com/vectors/green-alien-climbs-out-from-the-hole-of-space-with-stars-in-flat-vector-id1173828830?k=20&m=1173828830&s=612x612&w=0&h=bXd7sIQWbx7HJoDbvSb8BELPHZICLzgwioOaVmwIeJE=",
   password: "123456789!",
@@ -49,6 +58,11 @@ export const mockedUserLogin: IUserLogin = {
   password: "123456789!",
 };
 
+export const mockedUserLogin2: IUserLogin = {
+  email: "pedro@email.com",
+  password: "123456789!",
+};
+
 export const mockedLoginErrorPassword: IUserLogin = {
   email: "jonas@email.com",
   password: "123456",
@@ -85,11 +99,24 @@ export const mockedProject: IProjectRequest = {
   category: "Front-End",
   image: "imageproject.com/img.jpeg",
   link: "floresonline.com",
-  technology: "React, TypeScript",
+  techsId: [] as ITechRegisterRegister[],
+  userId: "",
 };
 
 export const mockedProjectPatchName: any = {
   name: "Flores Online",
+};
+
+export const mockedTech: any = {
+  name: "React",
+};
+
+export const mockedTech2: any = {
+  name: "TypeScript",
+};
+
+export const mockedTech3: any = {
+  name: "JavaScript",
 };
 
 export const mockedProjectPatchId: any = {
@@ -98,4 +125,16 @@ export const mockedProjectPatchId: any = {
 
 export const mockedContactPatchId: any = {
   id: "48d4dd5d5e6f",
+};
+
+export const mockedTechPost: any = {
+  name: "javaScript",
+};
+
+export const MockedPatchTestTech: any = {
+  name: "TypeScript",
+};
+
+export const MockedPatchTestTechID: any = {
+  id: "12393h47f4",
 };

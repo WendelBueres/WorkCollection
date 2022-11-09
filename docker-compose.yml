@@ -1,0 +1,31 @@
+version: "3.9"
+
+services:
+  api:
+    container_name: api_workcollection
+    build: .
+    ports:
+      - $port:$port
+    env_file:
+      - .env
+    depends_on:
+      workcollection:
+        condition: service_healthy
+    command: bash -c "yarn typeorm migration:run -d src/data-source.ts && yarn dev"
+    volumes:
+      - .:/app
+
+  workcollection:
+    container_name: workcollection
+    image: postgres:14-alpine
+    ports:
+      - $PGPORT:$PGPORT
+      - 5432:$PGPORT
+    env_file:
+      - .env
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $POSTGRES_USER -d $POSTGRES_DB"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 5s

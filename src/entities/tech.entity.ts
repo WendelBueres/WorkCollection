@@ -16,11 +16,14 @@ class Tech {
   @Column()
   name: string;
 
-  @ManyToOne((type) => User, (tech) => Tech)
+  @ManyToOne((type) => User, (user) => user.techs, { onDelete: "CASCADE" })
   user: User;
 
-  @OneToMany((types) => ProjectTech, (techs) => Tech)
-  projectTechs: ProjectTech;
+  @OneToMany((type) => ProjectTech, (projects) => projects.techs)
+  projects: ProjectTech[];
+
+  @Column()
+  userId: string;
 }
 
 export { Tech };
