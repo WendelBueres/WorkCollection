@@ -2,7 +2,6 @@ import { IContactRequest } from "../../interfaces/contact";
 import { IProjectRequest } from "../../interfaces/projects";
 import { ITechRegister } from "../../interfaces/techs";
 import { IUserLogin, IUserRequest } from "../../interfaces/user";
-import { createdUserIdTest } from "../integration/users";
 
 export const mockedUser: IUserRequest = {
   name: "Jonas",
@@ -56,6 +55,11 @@ export const mockedUserPatchId: any = {
 
 export const mockedUserLogin: IUserLogin = {
   email: "jonas@email.com",
+  password: "123456789!",
+};
+
+export const mockedUserLogin2: IUserLogin = {
+  email: "pedro@email.com",
   password: "123456789!",
 };
 

@@ -11,6 +11,7 @@ import {
   mockedTech3,
   mockedUser,
   mockedUserLogin,
+  mockedUserLogin2,
 } from "../../mocks";
 import { ITechRegister, ITechs } from "../../../interfaces/techs";
 
@@ -20,6 +21,7 @@ let tech: { id: string };
 let tech2: { id: string };
 let tech3: { id: string };
 let token: string;
+let token2: string;
 
 describe("/projects", () => {
   let connection: DataSource;
@@ -77,6 +79,27 @@ describe("/projects", () => {
     expect(res.status).toBe(201);
   });
 
+  test("PATCH/projects - it should not be possible to patch project that does not belong to the user", async () => {
+    const login2 = await request(app).post("/login").send(mockedUserLogin2);
+    token2 = login2.body.token;
+    token2 = `Bearer ${token}`;
+    const res = await request(app)
+      .patch(`/projects/${projectIdTest}`)
+      .set("Authorization", token2)
+      .send(mockedProjectPatchName);
+
+    expect(res.status).toBe(403);
+  });
+
+  test("DELETE/projects - it should not be possible to delete project that does not belong to the user", async () => {
+    const res = await request(app)
+      .delete(`/projects/${projectIdTest}`)
+      .set("Authorization", token2)
+      .send(mockedProjectPatchName);
+
+    expect(res.status).toBe(403);
+  });
+
   test("PATCH/projects - must be able to patch the project", async () => {
     const login = await request(app).post("/login").send(mockedUserLogin);
     token = login.body.token;
@@ -104,5 +127,14 @@ describe("/projects", () => {
     expect(res.body).toHaveProperty("message");
     expect(res.body.message).toEqual("id is read only");
     expect(res.status).toBe(400);
+  });
+
+  test("DELETE/projects - must be able to delete the project", async () => {
+    const res = await request(app)
+      .delete(`/projects/${projectIdTest}`)
+      .set("Authorization", token)
+      .send(mockedProjectPatchName);
+
+    expect(res.status).toBe(204);
   });
 });
