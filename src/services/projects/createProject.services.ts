@@ -13,6 +13,7 @@ const createProjectService = async (data: IProjectRequest, userId: string) => {
   const techRepository = AppDataSource.getRepository(Tech);
   const userRepository = AppDataSource.getRepository(User);
   const userExist = await userRepository.findOneBy({ id: userId });
+  const arrayTechs: string[] = [];
 
   if (!data.techsId) {
     throw new AppError(
@@ -23,9 +24,23 @@ const createProjectService = async (data: IProjectRequest, userId: string) => {
   await Promise.all(
     data.techsId.map(async (element) => {
       const { id } = element;
-      const checkTech = await techRepository.findOneBy({ id: id });
-      if (checkTech === null) {
-        throw new AppError(`techId: ${id} not find`, 404);
+      if (id) {
+        const checkTech = await techRepository.findOneBy({ id: id });
+        if (checkTech === null) {
+          throw new AppError(`tech: id ${id} not find`, 404);
+        }
+        arrayTechs.push(checkTech.id);
+      }
+      const { name } = element;
+      if (name) {
+        const checkTech = await techRepository.findOneBy({
+          name: name,
+          userId: userId,
+        });
+        if (checkTech === null) {
+          throw new AppError(`tech: name ${name} not find`, 404);
+        }
+        arrayTechs.push(checkTech.id);
       }
     })
   );
@@ -50,19 +65,22 @@ const createProjectService = async (data: IProjectRequest, userId: string) => {
   project.userId = userExist.id;
   project = await projectRepository.save(project);
 
-  let arrayTech: ProjectTech[] = [];
+  await Promise.all(
+    arrayTechs.map(async (idTech) => {
+      const projectTechs: IProjectTechsRequest = {
+        projectsId: project.id,
+        techsId: idTech,
+      };
+      let projectTechCreated = projectTechsRepository.create(projectTechs);
+      projectTechCreated = await projectTechsRepository.save(
+        projectTechCreated
+      );
+    })
+  );
 
-  data.techsId.forEach(async (idTech) => {
-    const projectTechs: IProjectTechsRequest = {
-      projectsId: project.id,
-      techsId: idTech.id,
-    };
-    let projectTechCreated = projectTechsRepository.create(projectTechs);
-    projectTechCreated = await projectTechsRepository.save(projectTechCreated);
-    arrayTech.push(projectTechCreated);
-  });
+  const findProject = await projectRepository.findOneBy({ id: project.id });
 
-  return await projectRepository.findOneBy({ id: project.id });
+  return findProject;
 };
 
 export default createProjectService;

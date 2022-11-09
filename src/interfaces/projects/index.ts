@@ -1,11 +1,11 @@
-import { ITechRegister } from "../techs";
+import { ITechRegisterRegister } from "../techs";
 
 export interface IProjectRequest {
   name: string;
   category: string;
   image?: string | null;
   link: string;
-  techsId: ITechRegister[];
+  techsId: ITechRegisterRegister[];
   userId: string;
 }
 

@@ -7,6 +7,7 @@ export interface ITechs extends ITechsRequest {
   id: string;
 }
 
-export interface ITechRegister {
-  id: string;
+export interface ITechRegisterRegister {
+  id?: string;
+  name?: string;
 }

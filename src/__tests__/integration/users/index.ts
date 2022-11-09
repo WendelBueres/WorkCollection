@@ -4,7 +4,6 @@ import request from "supertest";
 import app from "../../../app";
 import {
   mockedUser,
-  mockedUser2,
   mockedUserErrorBio,
   mockedUserErrorEmail,
   mockedUserErrorName,
@@ -13,10 +12,8 @@ import {
   mockedUserPatch,
   mockedUserPatchId,
 } from "../../mocks";
-import { User } from "../../../entities/user.entity";
 
 let createdUserIdTest: string;
-let listUsers: User[];
 let token: string;
 
 describe("/users", () => {
@@ -106,7 +103,7 @@ describe("/users", () => {
     token = login.body.token;
     token = `Bearer ${token}`;
     const res = await request(app)
-      .patch(`/users/${createdUserIdTest}`)
+      .patch(`/users`)
       .set("Authorization", token)
       .send(mockedUserPatch);
 
@@ -117,7 +114,7 @@ describe("/users", () => {
 
   test("PATCH/users - must not be able to alter user id", async () => {
     const res = await request(app)
-      .patch(`/users/${createdUserIdTest}`)
+      .patch(`/users`)
       .set("Authorization", token)
       .send(mockedUserPatchId);
 
@@ -134,29 +131,10 @@ describe("/users", () => {
 
   test("DELETE/users - should be able to delete user", async () => {
     const res = await request(app)
-      .delete(`/users/${createdUserIdTest}`)
+      .delete(`/users`)
       .set("Authorization", token)
       .send();
     expect(res.status).toBe(204);
-  });
-
-  test("DELETE/users - user may not be able to delete a user who does not own it", async () => {
-    const login2 = await request(app).post("/login").send(mockedUser2);
-    token = login2.body.token;
-    token = `Bearer ${token}`;
-    const res = await request(app)
-      .delete(`/users/${createdUserIdTest}`)
-      .set("Authorization", token)
-      .send();
-    expect(res.status).toBe(403);
-  });
-
-  test("PATCH/users - user may not be able to patch a user who does not own it", async () => {
-    const res = await request(app)
-      .patch(`/users/${createdUserIdTest}`)
-      .set("Authorization", token)
-      .send(mockedUserPatch);
-    expect(res.status).toBe(403);
   });
 });
 
