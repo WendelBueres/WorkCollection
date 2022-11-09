@@ -1,3 +1,4 @@
+import { Exclude } from "class-transformer";
 import {
   Entity,
   Column,
@@ -35,7 +36,8 @@ class Project {
   })
   techs: ProjectTech[];
 
-  @Column({ select: false })
+  @Column()
+  @Exclude()
   userId: string;
 }
 

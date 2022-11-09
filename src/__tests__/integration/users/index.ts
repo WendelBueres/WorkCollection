@@ -8,6 +8,7 @@ import {
   mockedUserErrorEmail,
   mockedUserErrorName,
   mockedUserErrorPassword,
+  mockedUserLogin,
   mockedUserPatch,
   mockedUserPatchId,
 } from "../../mocks";
@@ -15,7 +16,7 @@ import { User } from "../../../entities/user.entity";
 
 let createdUserIdTest: string;
 let listUsers: User[];
-
+let token: string;
 
 describe("/users", () => {
   let connection: DataSource;
@@ -100,8 +101,12 @@ describe("/users", () => {
   });
 
   test("PATCH/users - should be able to change email", async () => {
+    const login = await request(app).post("/login").send(mockedUserLogin);
+    token = login.body.token;
+    token = `Bearer ${token}`;
     const res = await request(app)
       .patch(`/users/${createdUserIdTest}`)
+      .set("Authorization", token)
       .send(mockedUserPatch);
 
     expect(res.body).toHaveProperty("email");
@@ -111,27 +116,28 @@ describe("/users", () => {
 
   test("PATCH/users - must not be able to alter user id", async () => {
     const res = await request(app)
-    .patch(`/users/${createdUserIdTest}`)
+      .patch(`/users/${createdUserIdTest}`)
+      .set("Authorization", token)
       .send(mockedUserPatchId);
-      
+
     expect(res.body).toHaveProperty("message");
     expect(res.body.message).toEqual("id is read only");
     expect(res.status).toBe(400);
   });
-  
-  test("GET/users - should be able to list users", async () => {
-    const res = await request(app).get('/users')
 
-    
-    expect(res.body).toHaveLength(1)
-  })
+  test("GET/users - should be able to list users", async () => {
+    const res = await request(app).get("/users");
+
+    expect(res.body).toHaveLength(1);
+  });
 
   test("DELETE/users - should be able to delete user", async () => {
-    const res = await request(app).delete(`/users/${createdUserIdTest}`).send();
+    const res = await request(app)
+      .delete(`/users/${createdUserIdTest}`)
+      .set("Authorization", token)
+      .send();
     expect(res.status).toBe(204);
-  })
-
-
+  });
 });
 
 export { createdUserIdTest };
