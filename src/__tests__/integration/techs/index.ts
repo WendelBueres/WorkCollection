@@ -69,7 +69,7 @@ describe("/technologies", () => {
     expect(res.status).toBe(400);
   });
 
-  test("DELETE/technologies - should be able to delete all tech", async () => {
+  test("DELETE/technologies - should be able to delete tech", async () => {
     const res = await request(app)
       .delete(`/technologies/${techIdTest}`)
       .set("Authorization", token)
