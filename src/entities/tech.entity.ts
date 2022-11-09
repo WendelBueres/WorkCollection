@@ -22,7 +22,7 @@ class Tech {
   @OneToMany((type) => ProjectTech, (projects) => projects.techs)
   projects: ProjectTech[];
 
-  @Column({ select: false })
+  @Column()
   userId: string;
 }
 

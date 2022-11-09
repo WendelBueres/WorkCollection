@@ -8,7 +8,7 @@ const deleteProjectController = async (req: Request, res: Response) => {
 
   await deleteProjectService(id, userId);
 
-  return res.status(202).json({ message: "Successfully Deleted" });
+  return res.status(204).json({ message: "Successfully Deleted" });
 };
 
 export default deleteProjectController;
