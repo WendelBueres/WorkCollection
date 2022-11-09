@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
-import listTechsService from "../../services/techs/listTechs.service";
-
+import listTechsService from "../../services/techs/listTechs.services";
 
 const listTechsController = async (req: Request, res: Response) => {
   const listedTechs = await listTechsService();
