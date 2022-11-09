@@ -104,48 +104,11 @@
             }
           }
         }
-      }
-    },
-    "/users/{id}": {
-      "get": {
-        "summary": "Get User by Id",
-        "description": "Rota responsavel por consultar Usuario por Id",
-        "tags": ["User"],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "Usuario pelo Id",
-            "required": "true"
-          }
-        ],
-        "security": [{ "BearerAuth": [] }],
-        "responses": {
-          "200": {
-            "description": "Ok",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "$ref": "#/components/schemas/CreateUser"
-                }
-              }
-            }
-          }
-        }
       },
       "delete": {
-        "summary": "Delete User by Id",
-        "description": "Rota responsavel por deletar Usuario por Id",
+        "summary": "Delete User",
+        "description": "Rota responsavel por deletar Usuario",
         "tags": ["User"],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "Usuario pelo Id",
-            "required": "true"
-          }
-        ],
         "security": [{ "BearerAuth": [] }],
         "responses": {
           "204": {
@@ -157,17 +120,9 @@
         }
       },
       "patch": {
-        "summary": "Update User by Id",
-        "description": "Rota responsavel por atualizar Usuario por Id",
+        "summary": "Update User",
+        "description": "Rota responsavel por atualizar Usuario",
         "tags": ["User"],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "Usuario pelo Id",
-            "required": "true"
-          }
-        ],
         "security": [{ "BearerAuth": [] }],
         "requestBody": {
           "content": {
@@ -197,6 +152,35 @@
         "responses": {
           "200": {
             "description": "OK"
+          }
+        }
+      }
+    },
+    "/users/{id}": {
+      "get": {
+        "summary": "Get User by Id",
+        "description": "Rota responsavel por consultar Usuario por Id",
+        "tags": ["User"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Usuario pelo Id",
+            "required": "true"
+          }
+        ],
+        "security": [{ "BearerAuth": [] }],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/CreateUser"
+                }
+              }
+            }
           }
         }
       }
@@ -402,23 +386,15 @@
             }
           }
         }
+      },
+      "delete": {
+        "summary": "Delete all Contact",
+        "description": "Rota responsavel por deletar Contatos",
+        "tags": ["Contacts"],
+        "security": [{ "BearerAuth": [] }]
       }
     },
     "/contacts/{id}": {
-      "delete": {
-        "summary": "Delete Contact by Id",
-        "description": "Rota responsavel por deletar Contatos",
-        "tags": ["Contacts"],
-        "security": [{ "BearerAuth": [] }],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "Usuario pelo Id",
-            "required": "true"
-          }
-        ]
-      },
       "patch": {
         "summary": "Update Contact by Id",
         "description": "Rota responsavel por atualizar Contato pelo Id",
@@ -443,19 +419,13 @@
         }
       }
     },
-    "/contacts/{id}/{contact}": {
+    "/contacts/{contact}": {
       "delete": {
         "summary": "Delete a only Contact by Id",
         "description": "Rota responsavel por deletar um unico contato",
         "tags": ["Contacts"],
         "security": [{ "BearerAuth": [] }],
         "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "Usuario pelo Id",
-            "required": "true"
-          },
           {
             "name": "contact",
             "in": "path",
