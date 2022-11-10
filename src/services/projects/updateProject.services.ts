@@ -88,7 +88,7 @@ const updateProjectService = async (id: string, userId: string, data: any) => {
     delete data.techsId;
   }
 
-  if (data.length > 0) {
+  if (data.name || data.category || data.image || data.link) {
     await projectRepository.update(id, data);
   }
 
