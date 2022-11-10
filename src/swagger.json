@@ -36,9 +36,11 @@
         },
         "responses": {
           "200": {
-            "description": "token: "
+            "description": "token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc0FkbSI6ImV2ZXJ0b25Aa2VuemllLmNvbS5iciIsImlhdCI6MTY2ODAzMzA3MSwiZXhwIjoxNjY4MDk3ODcxLCJzdWIiOiI2OGM5NmY3NS02NGU5LTQ5ZjEtODM4NC1lOTFiZTg4ZmM1ZGIifQ.A5yLzaR-D9hitzNc2gc7p90JN8Gh55K0EnZ85DD2lX8"
           },
-          "400": { "description": "email is a field required" }
+          "400": {
+            "description": "email is a field required / password is a field required / user or password invalid"
+          }
         }
       }
     },
@@ -73,7 +75,7 @@
           }
         },
         "responses": {
-          "200": {
+          "201": {
             "description": "Ok",
             "content": {
               "application/json": {
@@ -83,6 +85,9 @@
                 }
               }
             }
+          },
+          "400": {
+            "description": "name is a field required / email is a field required / bio is a field required / password is a field required / Email already exists"
           }
         }
       },
@@ -181,7 +186,8 @@
                 }
               }
             }
-          }
+          },
+          "400": { "description": "user not found" }
         }
       }
     },
