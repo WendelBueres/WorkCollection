@@ -15,7 +15,7 @@ const createProjectService = async (data: IProjectRequest, userId: string) => {
   const userExist = await userRepository.findOneBy({ id: userId });
   const arrayTechs: string[] = [];
 
-  if (!data.techsId) {
+  if (!data.techsId || data.techsId.length === 0) {
     throw new AppError(
       `techsId is required, if you have not created a technology, proceed with the creation through the POST endpoint: /technologies`
     );
